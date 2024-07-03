@@ -1,0 +1,217 @@
+# church
+
+<!-- USERS    -->
+
+{
+    "UserID": "U123456",
+    "LastName": "Doe",
+    "FirstName": "John",
+    "Phone": 781-000-0000,
+    "Rank": "Deacon",
+    "MembershipDate": 7/2/2010.
+    "BirthDate": ""
+    "Address": {
+                "Street": "123 Main",
+                "City": "Anytown",
+                "State": "OH",
+                "ZIPCode": 12345
+    },
+    "Role": "",
+    "email": "john.doe@gmail.com",
+}
+
+<!-- EVENTS -->
+{
+    "EventID": "E654321",
+    "EventName": "Sunday Service",
+    "EventDate": "2022-06-12",
+    "StartTime": "10:00 AM",
+    "EndTime": "12:00 PM",
+    "Location": {
+        "Room": "Sanctuary",
+        "Building": "Main Church",
+        "Address": {
+            "Street": "123 Main St",
+            "City": "Boston",
+            "State": "MA",
+            "ZIPCode": 12345
+        }
+    }
+}
+
+<!-- Groups -->
+
+{
+    "GroupID": "G101",
+    "GroupName": "Bible Study",
+    "LeaderID": "U123456",
+    "Members": ["u123456", "U654321", "U789012"],
+    "MeetingTime": "Wednesdays 7:00 PM",
+    "Location": {
+        "Room": "Room 101",
+        "Building": "Education Wing",
+        "Address": {
+            "Street": "123 Main St",
+            "City": "Boston",
+            "State": "MA",
+            "ZIPCode": 12345
+        }
+    }
+}
+
+<!-- Sunday school table -->
+
+{
+    "LessonID": "L001",
+    "LessonName": "Introduction to the Bible",
+    "TeacherID": 123456,
+    "ScheduledDate": "2022-01-02",
+    "Duration": "1 hour",
+    "TopicsCovered": ["Overview of the Bible", "Books of the Bible", "Major Themes"],
+    "Materials": ["Bible", "Study Guide", "Presentation Slides"],
+    "Attendance": [123456, 654321, 789012]
+}
+
+
+<!-- Users table with GSI - Global Secondary indexes -->
+{
+    "TableName": "Users",
+    "KeySchema": [
+        { "AttributeName": "UserID", "KeyType": "HASH" }
+    ],
+    "AttributeDefinitions": [
+        { "AttributeName": "UserID", "AttributeType": "N" },
+        { "AttributeName": "Phone", "AttributeType": "S" },
+        { "AttributeName": "Email", "AttributeType": "S" },
+        { "AttributeName": "LastName", "AttributeType": "S" },
+        { "AttributeName": "FirstName", "AttributeType": "S" }
+    ],
+    "ProvisionedThroughput": {
+        "ReadCapacityUnits": 5,
+        "WriteCapacityUnits": 5
+    },
+    "GlobalSecondaryIndexes": [
+        {
+            "IndexName": "PhoneIndex",
+            "KeySchema": [
+                { "AttributeName": "Phone", "KeyType": "HASH" }
+            ],
+            "Projection": {
+                "ProjectionType": "ALL"
+            },
+            "ProvisionedThroughput": {
+                "ReadCapacityUnits": 5,
+                "WriteCapacityUnits": 5
+            }
+        },
+        {
+            "IndexName": "EmailIndex",
+            "KeySchema": [
+                { "AttributeName": "Email", "KeyType": "HASH" }
+            ],
+            "Projection": {
+                "ProjectionType": "ALL"
+            },
+            "ProvisionedThroughput": {
+                "ReadCapacityUnits": 5,
+                "WriteCapacityUnits": 5
+            }
+        },
+        {
+            "IndexName": "LastNameIndex",
+            "KeySchema": [
+                { "AttributeName": "LastName", "KeyType": "HASH" }
+            ],
+            "Projection": {
+                "ProjectionType": "ALL"
+            },
+            "ProvisionedThroughput": {
+                "ReadCapacityUnits": 5,
+                "WriteCapacityUnits": 5
+            }
+        },
+        {
+            "IndexName": "FirstNameIndex",
+            "KeySchema": [
+                { "AttributeName": "FirstName", "KeyType": "HASH" }
+            ],
+            "Projection": {
+                "ProjectionType": "ALL"
+            },
+            "ProvisionedThroughput": {
+                "ReadCapacityUnits": 5,
+                "WriteCapacityUnits": 5
+            }
+        }
+    ],
+    "Items": [
+        {
+            "UserID": 123456,
+            "LastName": "Doe",
+            "FirstName": "John",
+            "Phone": "781-000-0000",
+            "Rank": "Deacon",
+            "MembershipDate": "2010-07-02",
+            "BirthDate": "",
+            "Address": {
+                "Street": "123 Main",
+                "City": "Anytown",
+                "State": "OH",
+                "ZIPCode": 12345
+            },
+            "Role": "",
+            "Email": "john.doe@gmail.com"
+        }
+    ]
+}
+
+
+<!-- Event with S3 -->
+{
+    "TableName": "Events",
+    "KeySchema": [
+        { "AttributeName": "EventID", "KeyType": "HASH" }
+    ],
+    "AttributeDefinitions": [
+        { "AttributeName": "EventID", "AttributeType": "S" },
+        { "AttributeName": "EventName", "AttributeType": "S" }
+    ],
+    "ProvisionedThroughput": {
+        "ReadCapacityUnits": 5,
+        "WriteCapacityUnits": 5
+    },
+    "GlobalSecondaryIndexes": [
+        {
+            "IndexName": "EventNameIndex",
+            "KeySchema": [
+                { "AttributeName": "EventName", "KeyType": "HASH" }
+            ],
+            "Projection": {
+                "ProjectionType": "ALL"
+            },
+            "ProvisionedThroughput": {
+                "ReadCapacityUnits": 5,
+                "WriteCapacityUnits": 5
+            }
+        }
+    ],
+    "Items": [
+        {
+            "EventID": "E654321",
+            "EventName": "Sunday Service",
+            "EventDate": "2022-06-12",
+            "StartTime": "10:00 AM",
+            "EndTime": "12:00 PM",
+            "Location": {
+                "Room": "Sanctuary",
+                "Building": "Main Church",
+                "Address": {
+                    "Street": "123 Main St",
+                    "City": "Boston",
+                    "State": "MA",
+                    "ZIPCode": 12345
+                }
+            }
+        }
+    ]
+}
